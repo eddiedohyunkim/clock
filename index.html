@@ -13,23 +13,26 @@
 		html, body{
 			height:100%;
 		}
+		:root{
+			--bgc: green;
+			--txc: white;
+		}
 		body{
-			background: green;
-			color:white;
+			background: var(--bgc);
+			color:var(--txc);
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
-		main{
-			background: green;
+		body.countdown{
+			background: var(--txc);
+			color:var(--bgc);
 		}
+
 		h1, h2{
 			font-size: 20vw;
 			font-family: "Arial Narrow";
 			text-align: center;
-		}
-		h1{
-/*			font-size: 15vw;*/
 		}
 	</style>
 </head>
@@ -43,20 +46,25 @@
 		let h1 = document.querySelector('h1');
 		let h2 = document.querySelector('h2');
 		
-		function time() {
-			var today = new Date();
-			var y = today.getFullYear();
-			var mn = today.getMonth();
-			var d = today.getDate();
-			var s = today.getSeconds();
-			var m = today.getMinutes();
-			var h = today.getHours() % 12 || 12;
-			h1.innerHTML = y + '-' + ("0" + (mn+1)).substr(-2) + '-' + ("0" + d).substr(-2);
-			// span.textContent = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+		function time(){
+			let today = new Date();
+			let y = today.getFullYear();
+			let mo = today.getMonth();
+			let d = today.getDate();
+			let s = today.getSeconds();
+			let m = today.getMinutes();
+			let h = today.getHours() % 12 || 12;
+			h1.innerHTML = y + '-' + ("0" + (mo+1)).substr(-2) + '-' + ("0" + d).substr(-2);
 			h2.textContent = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);	
+
+			
+			if(m == 59 && 50 <= s && s <= 59){
+				document.body.classList.toggle('countdown');
+			}
 		}
 		time()
 		setInterval(time, 1000);
+
 
 
 		document.documentElement.addEventListener('click', openFullscreen, false);
@@ -70,8 +78,6 @@
 		    elem.msRequestFullscreen();
 		  }
 		}
-		
-		
 	</script>
 </body>
 </html>
